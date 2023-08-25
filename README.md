@@ -1,0 +1,2 @@
+# recipes
+Django Recipe app
