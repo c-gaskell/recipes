@@ -1,0 +1,10 @@
+-r requirements.txt
+
+flake8
+isort
+mypy
+
+flake8-annotations
+flake8-docstrings
+flake8-isort
+flake8-mypy
