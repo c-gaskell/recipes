@@ -20,6 +20,7 @@ body {
     margin: 10px auto;
     padding: 0;
     background-color: var(--bg);
+    font-size: 150%;
 }
 
 a {
