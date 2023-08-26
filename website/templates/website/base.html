@@ -22,12 +22,15 @@
             {% if user.is_authenticated %}
             <li class="navitem navitemr dropdown"> <span> Welcome Back, {{ user.first_name }}. </span>
                 <ul class="dropdown-content dropdown-r">
-                    <li><a href="#"> Profile </a></li>
-                    <li><a href="#"> Favourites </a></li>
-                    <li><a href="#"> Preferences </a></li>
+                    <li><a href="/user/{{user.username}}"> Profile </a></li>
+                    <li><a href="/user/{{user.username}}/favourites"> Favourites </a></li>
+                    <li><a href="/user/{{user.username}}/preferences"> Preferences </a></li>
                     <li><a href="/accounts/logout"> Logout </a></li>
                 </ul>
             </li>
+            {% if author %}
+            <li class="navitem navitemr"> <a href="/create"> New Recipe </a> </li>
+            {% endif %}
             {% else %}
             <li class="navitem navitemr"> <a href="/accounts/login"> Login </a> </li>
             <li class="navitem navitemr"> <a href="/accounts/signup"> Sign Up </a> </li>
