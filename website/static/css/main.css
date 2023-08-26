@@ -107,3 +107,27 @@ li.navitemr > *:not(.dropdown-content) {
     margin: 0 auto;
 }
 
+input[type=text], input[type=password] {
+    border: 1px solid var(--fg);
+    border-radius: 0;
+    background-color: var(--bg);
+    color: var(--fg);
+    font-size: inherit;
+    font-family: inherit;
+    padding: 5px;
+}
+
+button {
+    padding: 10px;
+    border: 1px solid var(--fg);
+    background-color: var(--bg);
+    color: var(--fg);
+    font-size: inherit;
+    font-family: inherit;
+    font-style: italic;
+    text-decoration: underline;
+}
+
+button:hover {
+    font-style: normal;
+}
