@@ -52,13 +52,13 @@ li.navitemr {
     float: right;
 }
 
-li.navitem a {
+li.navitem > * {
     display: block;
     padding: 10px;
     border-right: 1px solid var(--fg);
 }
 
-li.navitemr a {
+li.navitemr > * {
     border-right: none;
     border-left: 1px solid var(--fg);
 }

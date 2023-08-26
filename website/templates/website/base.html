@@ -19,7 +19,11 @@
             <li class="navitem"> <a href="/"> Home </a> </li>
             <li class="navitem"> <a href="/test"> Test </a> </li>
 
-            <li class="navitem navitemr"> <a href="#"> Login </a> </li>
+            {% if user.is_authenticated %}
+            <li class="navitem navitemr"> <span> Hello, {{ user.first_name }}. <a href="/accounts/logout"> Logout </a> </span> </li>
+            {% else %}
+            <li class="navitem navitemr"> <a href="/accounts/login"> Login </a> </li>
+            {% endif %}
         </ul>
 
         <div class="maincontent">
