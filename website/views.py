@@ -8,6 +8,11 @@ from django.views import View
 from .models import Recipe
 
 
+def is_author(user: User) -> bool:
+    """Check if user is an author."""
+    return user.groups.filter(name='Author').exists()
+
+
 class BaseView(View):
     """Parent class for pages using the `website/base.html` template."""
 
@@ -23,7 +28,7 @@ class BaseView(View):
         attrs['author'] = is_author(request.user)
         return attrs
 
-    def get(self, request: HttpRequest) -> HttpResponse:
+    def get(self, request: HttpRequest, **kwargs: Dict[str, Any]) -> HttpResponse:
         """HTTP GET Method.
 
         Generic method which will use get_page_attrs and self.template.
@@ -33,15 +38,10 @@ class BaseView(View):
         return render(request, self.template, attrs)
 
 
-def is_author(user: User) -> bool:
-    """Check if user is an author."""
-    return user.groups.filter(name='Author').exists()
-
-
-# Create your views here.
-def test(request: HttpRequest) -> HttpResponse:
+class TestView(BaseView):
     """Basic Test Page. Used for checking templates, styles etc."""
-    return render(request, "website/test.html")
+
+    template = "website/test.html"
 
 
 class HomeView(BaseView):
@@ -56,16 +56,19 @@ class HomeView(BaseView):
         return attrs
 
 
-def create(request: HttpRequest) -> HttpResponse:
+class CreateView(BaseView):
     """Recipe Creation page."""
-    return render(request, "website/create.html")
+
+    template = "website/create.html"
 
 
-def profile(request: HttpRequest, user: str) -> HttpResponse:
+class ProfileView(BaseView):
     """User's profile page."""
-    return render(request, "website/profile.html")
+
+    template = "website/profile.html"
 
 
-def recipe(request: HttpRequest, user: str, title: str) -> HttpResponse:
+class RecipeView(BaseView):
     """Recipe page."""
-    return render(request, "website/recipe.html")
+
+    template = "website/recipe.html"
