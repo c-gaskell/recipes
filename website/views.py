@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
+from django.views import View
 
 from .models import Recipe
 
@@ -16,11 +17,14 @@ def test(request: HttpRequest) -> HttpResponse:
     return render(request, "website/test.html")
 
 
-def home(request: HttpRequest) -> HttpResponse:
-    """Website Homepage."""
-    recipes = Recipe.objects.all().order_by("title")
-    print(f"{request.user.username} {'is' if is_author(request.user) else 'isnt'} an author.")
-    return render(request, "website/home.html", {"recipes": recipes, "author": is_author(request.user)})
+class HomeView(View):
+    """Homepage view."""
+
+    def get(self, request: HttpRequest) -> HttpResponse:
+        """HTTP GET method."""
+        recipes = Recipe.objects.all().order_by("title")
+        print(f"{request.user.username} {'is' if is_author(request.user) else 'isnt'} an author.")
+        return render(request, "website/home.html", {"recipes": recipes, "author": is_author(request.user)})
 
 
 def create(request: HttpRequest) -> HttpResponse:
