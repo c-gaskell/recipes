@@ -8,7 +8,7 @@
 <h2> All Recipes: </h2>
 
 {% for r in recipes %}
-    {{ r }}
+    <a href="/user/{{ r.author.username }}/recipe/{{ r.title }}">{{ r.title }} by {{ r.author }}</a>
 {% empty %}
     <p> No recipes found... </p>
 {% endfor %}
