@@ -50,9 +50,9 @@ class HomeView(BaseView):
     template = "website/home.html"
 
     def get_page_attrs(self, request: HttpRequest) -> Dict[str, str]:
-        """Get recipies to display in page."""
+        """Get recipes to display in page."""
         attrs = super().get_page_attrs(request)
-        attrs['recipies'] = Recipe.objects.all().order_by("title")
+        attrs['recipes'] = Recipe.objects.all().order_by("title")
         return attrs
 
 
