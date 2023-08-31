@@ -5,7 +5,7 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.views import View
 
-from .models import Recipe
+from .models import Ingredient, Recipe, Step
 
 
 def is_author(user: User) -> bool:
@@ -18,7 +18,7 @@ class BaseView(View):
 
     template = "website/base.html"
 
-    def get_page_attrs(self, request: HttpRequest) -> Dict[str, Any]:
+    def get_page_attrs(self, request: HttpRequest, kwargs: Dict[str, Any]) -> Dict[str, Any]:
         """Get attributes shown in the page template.
 
         This method will provide attributes used by the base template.
@@ -34,7 +34,7 @@ class BaseView(View):
         Generic method which will use get_page_attrs and self.template.
         If a subclass only needs custom attributes, just override get_page_attrs and not this method.
         """
-        attrs = self.get_page_attrs(request)
+        attrs = self.get_page_attrs(request, kwargs)
         return render(request, self.template, attrs)
 
 
@@ -49,9 +49,9 @@ class HomeView(BaseView):
 
     template = "website/home.html"
 
-    def get_page_attrs(self, request: HttpRequest) -> Dict[str, str]:
+    def get_page_attrs(self, request: HttpRequest, kwargs: Dict[str, Any]) -> Dict[str, str]:
         """Get recipes to display in page."""
-        attrs = super().get_page_attrs(request)
+        attrs = super().get_page_attrs(request, kwargs)
         attrs['recipes'] = Recipe.objects.all().order_by("title")
         return attrs
 
@@ -72,3 +72,14 @@ class RecipeView(BaseView):
     """Recipe page."""
 
     template = "website/recipe.html"
+
+    def get_page_attrs(self, request: HttpRequest, kwargs: Dict[str, Any]) -> Dict[str, Any]:
+        attrs = super().get_page_attrs(request, kwargs)
+
+        user = User.objects.get(username=kwargs["user"])
+        attrs["r"] = Recipe.objects.filter(author=user).get(title=kwargs["title"])
+
+        attrs["steps"] = Step.objects.filter(recipe=attrs["r"]).order_by("number")
+        attrs["ingredients"] = Ingredient.objects.filter(recipe=attrs["r"])
+
+        return attrs

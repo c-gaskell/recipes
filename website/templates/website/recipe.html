@@ -1,0 +1,26 @@
+{% extends 'website/base.html' %}
+
+{% block title %}Recipe | {{ r.title }}{% endblock title %}
+
+{% block content %}
+    <h1>{{ r.title }}</h1>
+    <h3>By {{ r.author }}</h3>
+
+    <h2>Ingredients</h2>
+    <ul>
+    {% for i in ingredients %}
+        <li>{{ i.amount }}{{ i.unit }} of {{ i.name }}</li>
+    {% empty %}
+        <li>No ingredients...</li>
+    {% endfor %}
+    </ul>
+
+    <h2>Steps</h2>
+    <ol>
+    {% for s in steps %}
+        <li>{{ s.text }}</li>
+    {% empty %}
+        <li>No steps...</li>
+    {% endfor %}
+    </ol>
+{% endblock content %}
