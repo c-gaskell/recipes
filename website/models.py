@@ -14,7 +14,7 @@ class Recipe(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self) -> str:
-        return self.title + " by " + self.author.full_name
+        return self.title + " by " + self.author.get_full_name()
 
 
 class Step(models.Model):
@@ -24,14 +24,21 @@ class Step(models.Model):
     number = models.IntegerField()
     text = models.TextField()
 
+    def __str__(self) -> str:
+        return "Step " + str(self.number) + " in <" + str(self.recipe) + ">"
+
 
 class Ingredient(models.Model):
     """A single ingredient within a recipe."""
 
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
     amount = models.FloatField()
-    unit = models.CharField(max_length=1)  # One of m, kg, C (as in degrees celcius), or L.
+    unit = models.CharField(max_length=2)  # One of m, kg, C (as in degrees celcius), or L.
     # Conversions to imperial or other units will be done elsewhere, all stored values are metric, in these 4 units.
+
+    def __str__(self) -> str:
+        return str(self.amount) + self.unit + " of " + self.name + " in <" + str(self.recipe) + ">"
 
 
 class Favourite(models.Model):
