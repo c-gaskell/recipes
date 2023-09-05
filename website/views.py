@@ -74,6 +74,7 @@ class RecipeView(BaseView):
     template = "website/recipe.html"
 
     def get_page_attrs(self, request: HttpRequest, kwargs: Dict[str, Any]) -> Dict[str, Any]:
+        """Adds the recipe, steps, and ingredients attrs to the page."""
         attrs = super().get_page_attrs(request, kwargs)
 
         user = User.objects.get(username=kwargs["user"])
