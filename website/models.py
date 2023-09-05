@@ -67,7 +67,14 @@ class Ingredient(models.Model):
     # Conversions to imperial or other units will be done elsewhere, all stored values are metric, in these 4 units.
 
     def __str__(self) -> str:
-        return str(self.amount) + self.unit + " of " + self.name + " in <" + str(self.recipe) + ">"
+        return self.human_readable() + " " + self.name + " in <" + str(self.recipe) + ">"
+
+    def human_readable(self, imperial: bool = False) -> str:
+        """Return human-readable form of amount and unit."""
+        if self.amount < 1.0 and self.LESSER_UNITS[self.unit]:
+            return f"{self.amount * 1000:.0f}{self.LESSER_UNITS[self.unit]}"
+        else:
+            return f"{self.amount:.0f}{self.READABLE_UNITS[self.unit]}"
 
 
 class Favourite(models.Model):
