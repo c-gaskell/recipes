@@ -107,7 +107,7 @@ li.navitemr > *:not(.dropdown-content) {
     margin: 0 auto;
 }
 
-input[type=text], input[type=email], input[type=password], input[type=search], input[type=url] {
+input, select, textarea {
     border: 1px solid var(--fg);
     border-radius: 0;
     background-color: var(--bg);
