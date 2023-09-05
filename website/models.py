@@ -31,10 +31,30 @@ class Step(models.Model):
 class Ingredient(models.Model):
     """A single ingredient within a recipe."""
 
+    CHOICES = [("kg", "kg"), ("L", "L"), ("C", "°C"), ("m", "m"), ("no", "amount")]
+    READABLE_UNITS = {
+        "kg": "kg",
+        "L": "L",
+        "C": "°C",
+        "m": "m",
+        "no": "",
+    }
+    LESSER_UNITS = {
+        "kg": "g",
+        "L": "mL",
+        "C": False,
+        "m": "mm",
+        "no": False,
+    }
+
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     amount = models.FloatField()
-    unit = models.CharField(max_length=2)  # One of m, kg, C (as in degrees celcius), or L.
+    unit = models.CharField(
+        max_length=2,
+        choices=CHOICES
+    )
+    # One of m, kg, C (as in degrees celcius), L, or no (as in number - ie no unit).
     # Conversions to imperial or other units will be done elsewhere, all stored values are metric, in these 4 units.
 
     def __str__(self) -> str:
