@@ -31,7 +31,14 @@ class Step(models.Model):
     text = models.TextField()
 
     def __str__(self) -> str:
-        return "Step " + str(self.number) + " in <" + str(self.recipe) + ">"
+        return "Step " + str(self.number) + ": " + self.summary(20) + " in <" + str(self.recipe) + ">"
+
+    def summary(self, length: int = 20) -> str:
+        """Return short summary of the step."""
+        if len(self.text) >= length - 3:
+            return self.text[:length - 3] + "..."
+        else:
+            return self.text
 
 
 class Ingredient(models.Model):
