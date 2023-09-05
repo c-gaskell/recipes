@@ -9,6 +9,9 @@ class Recipe(models.Model):
     Steps and Ingredients are separate models and contain foreign keys to the recipe.
     """
 
+    class Meta:
+        ordering = ["author", "title"]
+
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=255)
     created_date = models.DateTimeField(default=timezone.now)
@@ -19,6 +22,9 @@ class Recipe(models.Model):
 
 class Step(models.Model):
     """A single step within a recipe."""
+
+    class Meta:
+        ordering = ["recipe", "number"]
 
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     number = models.IntegerField()
@@ -46,6 +52,9 @@ class Ingredient(models.Model):
         "m": "mm",
         "no": False,
     }
+
+    class Meta:
+        ordering = ["unit", "amount"]
 
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
