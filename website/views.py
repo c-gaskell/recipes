@@ -26,6 +26,8 @@ class BaseView(View):
         """
         attrs = {}
         attrs['author'] = is_author(request.user)
+
+        attrs['ownername'] = User.objects.get(groups__name="admin").get_full_name()
         return attrs
 
     def get(self, request: HttpRequest, **kwargs: Dict[str, Any]) -> HttpResponse:
