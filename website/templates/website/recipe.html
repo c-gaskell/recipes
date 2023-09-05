@@ -4,12 +4,12 @@
 
 {% block content %}
     <h1>{{ r.title }}</h1>
-    <h3>By {{ r.author }}</h3>
+    <h3>By {{ r.author.get_full_name }}</h3>
 
     <h2>Ingredients</h2>
     <ul>
     {% for i in ingredients %}
-        <li>{{ i.amount }}{{ i.unit }} of {{ i.name }}</li>
+        <li>{{ i.human_readable }} {{ i.name }}</li>
     {% empty %}
         <li>No ingredients...</li>
     {% endfor %}
